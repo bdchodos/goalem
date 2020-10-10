@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  goalem-app:
+    image: goalem-app
+    container_name: goalem-app
+    ports:
+      - "8080:80"
+    build:
+      context: ./src/Goalem.App/
+      dockerfile: ./Dockerfile
