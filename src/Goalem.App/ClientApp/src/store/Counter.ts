@@ -4,7 +4,7 @@ import { Action, Reducer } from 'redux';
 // STATE - This defines the type of data maintained in the Redux store.
 
 export interface CounterState {
-    count: number;
+  count: number;
 }
 
 // -----------------
@@ -24,25 +24,25 @@ export type KnownAction = IncrementCountAction | DecrementCountAction;
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    increment: () => ({ type: 'INCREMENT_COUNT' } as IncrementCountAction),
-    decrement: () => ({ type: 'DECREMENT_COUNT' } as DecrementCountAction)
+  increment: () => ({ type: 'INCREMENT_COUNT' } as IncrementCountAction),
+  decrement: () => ({ type: 'DECREMENT_COUNT' } as DecrementCountAction)
 };
 
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
 export const reducer: Reducer<CounterState> = (state: CounterState | undefined, incomingAction: Action): CounterState => {
-    if (state === undefined) {
-        return { count: 0 };
-    }
+  if (state === undefined) {
+    return { count: 0 };
+  }
 
-    const action = incomingAction as KnownAction;
-    switch (action.type) {
-        case 'INCREMENT_COUNT':
-            return { count: state.count + 1 };
-        case 'DECREMENT_COUNT':
-            return { count: state.count - 1 };
-        default:
-            return state;
-    }
+  const action = incomingAction as KnownAction;
+  switch (action.type) {
+    case 'INCREMENT_COUNT':
+      return { count: state.count + 1 };
+    case 'DECREMENT_COUNT':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
 };
