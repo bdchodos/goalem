@@ -3,7 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 
-export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }> {
+export default class NavMenu extends React.PureComponent<{ isAuthenticated: boolean }, { isOpen: boolean }> {
   public state = {
     isOpen: false
   };
@@ -17,15 +17,18 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
             <NavbarToggler onClick={this.toggle} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
               <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-                </NavItem>
+                {this.props.isAuthenticated && (
+                  <React.Fragment>
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/counter">Counter</NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
+                    </NavItem>
+                  </React.Fragment>)}
               </ul>
             </Collapse>
           </Container>
