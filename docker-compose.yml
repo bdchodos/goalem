@@ -1,11 +1,39 @@
-version: '3'
+version: '3.7'
 
 services:
   goalem-app:
     image: goalem-app
     container_name: goalem-app
     ports:
-      - "8080:80"
+      - '8080:80'
     build:
       context: ./src/Goalem.App/
       dockerfile: ./Dockerfile
+    depends_on:
+      - goalem-db
+      - goalem-cache
+
+  goalem-db:
+    image: mongo:4.2.10
+    container_name: goalem-db
+    ports:
+      - '27017:27017'
+    expose:
+      - '27017'
+    volumes:
+      - goalem-db:/data/db
+
+  goalem-db-client:
+    image: mongoclient/mongoclient:4.0.0
+    container_name: goalem-db-client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - goalem-db
+
+  goalem-cache:
+    image: redis
+    container_name: goalem-cache
+
+volumes:
+  goalem-db:
