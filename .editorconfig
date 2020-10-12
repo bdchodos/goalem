@@ -8,7 +8,7 @@ root = true
 indent_style = space
 
 # Front End
-[*.{js,jsx,ts,tsx}]
+[*.{js,jsx,ts,tsx,css}]
 indent_style = space
 indent_size = 2
 
