@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Goalem.App
+namespace Goalem.App.Models
 {
 	public class WeatherForecast
 	{
@@ -10,6 +10,6 @@ namespace Goalem.App
 
 		public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
-		public string Summary { get; set; }
+		public string Summary { get; set; } = null!;
 	}
 }
