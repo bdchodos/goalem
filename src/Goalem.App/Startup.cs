@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Security.Claims;
+using Goalem.App.Auth.Constants;
+using Goalem.App.Auth.Requirements;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Goalem.App
 {
@@ -26,6 +31,30 @@ namespace Goalem.App
 			{
 				configuration.RootPath = "ClientApp/build";
 			});
+
+			string domain = $"https://{Configuration["Auth0:Domain"]}/";
+			services
+				.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(options =>
+				{
+					options.Authority = domain;
+					options.Audience = Configuration["Auth0:Audience"];
+					options.TokenValidationParameters = new TokenValidationParameters
+					{
+						NameClaimType = ClaimTypes.NameIdentifier
+					};
+				});
+
+			services
+				.AddAuthorization(options =>
+				{
+					options.AddPolicy(
+						GoalemPolicies.ReadData,
+						policy => policy.Requirements.Add(
+							new HasScopeRequirement(
+								GoalemPolicies.ReadData,
+								domain)));
+				});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +76,9 @@ namespace Goalem.App
 			app.UseSpaStaticFiles();
 
 			app.UseRouting();
+
+			app.UseAuthentication();
+			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{
