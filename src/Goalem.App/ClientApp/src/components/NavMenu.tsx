@@ -46,8 +46,8 @@ export default class NavMenu extends React.PureComponent<
                       </NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink tag={Link} className="text-dark" to="/counter">
-                        Counter
+                      <NavLink tag={Link} className="text-dark" to="/Profile">
+                        Profile
                       </NavLink>
                     </NavItem>
                     <NavItem>
