@@ -3,7 +3,7 @@ using Goalem.App.Controllers;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Goalem.UnitTests.App.Controllers
+namespace Goalem.App.Tests.Controllers
 {
 	[TestClass]
 	public class ActivitiesControllerTests
